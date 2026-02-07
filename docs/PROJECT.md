@@ -45,6 +45,16 @@
 *   AI: Python/C++ / Twilio (Parallel AI Calling)
 *   특징: 반응형 디자인, 다크모드(Ripple Transition), 접근성 최적화 (44px 터치 타겟, WCAG 2.2 준수)
 
+### 프론트엔드 기술 디테일 (Frontend Technical Details)
+*   **SEO 최적화**: Open Graph / Twitter Card 메타태그, JSON-LD 구조화 데이터(schema.org WebApplication), 페이지별 동적 메타데이터, 동적 OG 이미지 자동 생성 (Next.js Edge Runtime)
+*   **AEO (Answer Engine Optimization)**: 구조화 데이터를 통한 AI 검색 엔진 대응 — Google SGE, Bing Chat 등에서 서비스 정보를 정확히 파싱할 수 있도록 schema.org 마크업 적용
+*   **PWA (Progressive Web App)**: Web App Manifest, 홈 화면 추가 지원, standalone 모드, 포트레이트 고정
+*   **검색 엔진 크롤링**: robots.txt (전체 허용 + 크롤 딜레이), sitemap.xml (동적 생성, 페이지별 우선순위)
+*   **디자인 시스템**: Tailwind CSS v4 @theme API 기반 커스텀 디자인 토큰, 라이트/다크 모드 시맨틱 컬러 (응급 상황별 색상: Critical/Urgent/Success/Info/Warning)
+*   **테마 전환 애니메이션**: View Transitions API 기반 양방향 리플 서클 익스팬드 효과 (라이트→다크: 원 확장, 다크→라이트: 원 수축)
+*   **접근성**: WCAG 2.2 AA 준수, 최소 44px 터치 타겟, 4.5:1 명암비, 색상+아이콘 이중 상태 표시
+*   **성능**: Turbopack 빌드, 정적 생성(SSG) + 동적 렌더링 혼합, Edge Runtime OG 이미지
+
 ## 6. 서비스 흐름 (User Flow)
 1.  랜딩 페이지: 서비스의 목적과 긴급 호출 버튼 제공
 2.  환자 정보 입력: KTAS 분류 및 환자 상태(의식, 호흡 등) 체크리스트 작성
@@ -64,8 +74,34 @@
 ### 업무 부담 감소 및 생존율 향상
 *   구급대원은 전화 업무 대신 환자 처치에 집중할 수 있으며, 이는 곧 환자의 생존율 향상으로 이어집니다.
 
-## 8. 향후 계획
+## 8. 프론트엔드 구현 현황 (Implementation Status)
+
+### 완료된 페이지
+| 페이지 | 경로 | 설명 | 렌더링 방식 |
+|--------|------|------|-------------|
+| 랜딩 페이지 | `/` | 서비스 소개 + 응급 호출 CTA | SSG (정적) |
+| 환자 체크리스트 | `/checklist` | KTAS 1-5 분류 + 환자 정보 입력 | SSG (정적) |
+| 병원 대시보드 | `/dashboard/[id]` | 5개 병원 실시간 통화 시뮬레이션 | SSR (동적) |
+
+### 완료된 인프라
+| 항목 | 파일 | 설명 |
+|------|------|------|
+| SEO 메타데이터 | `app/layout.tsx` | OG, Twitter Card, keywords, robots, metadataBase |
+| 페이지별 메타데이터 | `app/*/layout.tsx` | 각 페이지 title, description, OG 설정 |
+| 동적 OG 이미지 | `app/opengraph-image.tsx` | Edge Runtime 자동 생성 (1200x630) |
+| JSON-LD 구조화 데이터 | `app/page.tsx` | schema.org WebApplication 마크업 |
+| PWA 매니페스트 | `public/manifest.json` | 홈 화면 추가, standalone 모드 |
+| 로봇 설정 | `public/robots.txt` | 크롤링 허용 + sitemap 연결 |
+| 사이트맵 | `app/sitemap.ts` | 동적 생성, 페이지별 우선순위 |
+| 디자인 시스템 | `app/globals.css` | 라이트/다크 모드 토큰 + 응급 시맨틱 컬러 |
+| UI 컴포넌트 | `components/ui/*` | shadcn/ui 기반 응급 의료 특화 변형 |
+| 테마 토글 | `components/theme/*` | 양방향 리플 View Transition 애니메이션 |
+| 반응형 레이아웃 | `components/layout/*` | Header, Footer, BottomNav, PageTransition |
+
+## 9. 향후 계획
 *   실제 병원 정보 시스템(HIS) API 연동을 통한 데이터 정교화
 *   GPS 기반 최적 경로 및 실시간 교통 상황 반영 병원 추천
 *   병원용 수용 현황 실시간 관리 대시보드 보급
 *   다국어 지원을 통한 국내 거주 외국인 및 관광객 응급 상황 대응
+*   Service Worker 기반 오프라인 지원 (네트워크 불안정 지역 대응)
+*   실시간 WebSocket 기반 병원 응답 스트리밍
