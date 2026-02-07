@@ -34,6 +34,7 @@ export interface StartMatchingResponse {
 
 export type SSEEventStatus =
   | 'connected'
+  | 'calling'
   | 'accepted'
   | 'rejected'
   | 'no_answer'

@@ -73,6 +73,18 @@ export function useHospitalStatus(
             setIsConnected(true);
             break;
 
+          case 'calling':
+            if (data.hospitalId !== undefined) {
+              updateStatus(
+                data.hospitalId,
+                'calling',
+                data.hospitalName,
+                data.hospitalNumber,
+                data.message
+              );
+            }
+            break;
+
           case 'accepted':
             if (data.hospitalId !== undefined) {
               updateStatus(
@@ -124,7 +136,6 @@ export function useHospitalStatus(
 
     eventSource.onerror = () => {
       setIsConnected(false);
-      setError('SSE connection lost. Attempting to reconnect...');
     };
 
     return () => {
