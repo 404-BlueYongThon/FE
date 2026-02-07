@@ -31,9 +31,34 @@ const itemVariants: Variants = {
   },
 };
 
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Emergency AI Call',
+  description:
+    'AI가 동시에 5개 병원에 전화하여 응급 환자를 위한 최적의 병원을 찾아드립니다.',
+  url: 'https://emergency-ai-call.vercel.app',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'KRW',
+  },
+  author: {
+    '@type': 'Organization',
+    name: '404_found',
+    url: 'https://github.com/404-BlueYongThon',
+  },
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden selection:bg-primary/20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
 
       <PageContainer size="md" className="py-12 pb-safe sm:py-20">

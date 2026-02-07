@@ -1,0 +1,20 @@
+{
+  "name": "Emergency AI Call - 응급 병원 자동 연결 시스템",
+  "short_name": "Emergency AI Call",
+  "description": "AI가 동시에 여러 병원에 전화하여 응급 환자를 위한 최적의 병원을 찾아드립니다",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1A56DB",
+  "orientation": "portrait-primary",
+  "lang": "ko",
+  "categories": ["medical", "health"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

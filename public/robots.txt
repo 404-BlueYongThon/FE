@@ -1,0 +1,12 @@
+# Emergency AI Call - 응급 병원 자동 연결 시스템
+# https://github.com/404-BlueYongThon/FE
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Crawl-delay for politeness
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://emergency-ai-call.vercel.app/sitemap.xml
