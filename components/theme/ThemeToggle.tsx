@@ -47,14 +47,21 @@ export default function ThemeToggle({ className }: ThemeToggleProps) {
 
     await transition.ready;
 
+    // After DOM update inside startViewTransition:
+    //   Light→Dark: .dark added → CSS puts OLD(light) on top (z:9999), NEW(dark) behind (z:1)
+    //   Dark→Light: .dark removed → CSS puts NEW(light) on top (z:9999), OLD(dark) behind (z:1)
+    // So we must always animate the pseudo-element that is ON TOP.
+
     const clipPathFrames = isDark
       ? [
-          `circle(${endRadius}px at ${x}px ${y}px)`,
+          // Dark→Light: animate NEW (light, on top) expanding outward
           `circle(0px at ${x}px ${y}px)`,
+          `circle(${endRadius}px at ${x}px ${y}px)`,
         ]
       : [
-          `circle(0px at ${x}px ${y}px)`,
+          // Light→Dark: animate OLD (light, on top) shrinking away
           `circle(${endRadius}px at ${x}px ${y}px)`,
+          `circle(0px at ${x}px ${y}px)`,
         ];
 
     document.documentElement.animate(
@@ -63,8 +70,8 @@ export default function ThemeToggle({ className }: ThemeToggleProps) {
         duration: 500,
         easing: 'ease-in-out',
         pseudoElement: isDark
-          ? '::view-transition-old(root)'
-          : '::view-transition-new(root)',
+          ? '::view-transition-new(root)'
+          : '::view-transition-old(root)',
       }
     );
   };
