@@ -97,10 +97,12 @@ export function useHospitalStatus(
             break;
 
           case 'calling':
+          case 'ringing':
+          case 'in-progress':
             if (data.hospitalId !== undefined) {
               updateStatus(
                 data.hospitalId,
-                'calling',
+                data.status as 'calling' | 'ringing' | 'in-progress',
                 data.hospitalName,
                 data.hospitalNumber,
                 data.message

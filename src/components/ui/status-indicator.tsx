@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CheckCircle, XCircle, Clock, AlertCircle, Phone } from 'lucide-react';
+import {
+  CheckCircle,
+  XCircle,
+  Clock,
+  AlertCircle,
+  Phone,
+  PhoneCall,
+  PhoneForwarded,
+} from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -11,9 +19,16 @@ const statusIndicatorVariants = cva(
       status: {
         pending: 'bg-muted text-muted-foreground',
         calling: 'bg-[var(--color-info)] text-[var(--color-info-foreground)]',
-        approved: 'bg-[var(--color-success)] text-[var(--color-success-foreground)]',
-        rejected: 'bg-[var(--color-critical)] text-[var(--color-critical-foreground)]',
-        timeout: 'bg-[var(--color-warning)] text-[var(--color-warning-foreground)]',
+        ringing:
+          'bg-[var(--color-urgent)] text-[var(--color-urgent-foreground)]',
+        'in-progress':
+          'bg-[var(--color-info)] text-[var(--color-info-foreground)]',
+        approved:
+          'bg-[var(--color-success)] text-[var(--color-success-foreground)]',
+        rejected:
+          'bg-[var(--color-critical)] text-[var(--color-critical-foreground)]',
+        timeout:
+          'bg-[var(--color-warning)] text-[var(--color-warning-foreground)]',
       },
       size: {
         default: 'h-10',
@@ -29,7 +44,8 @@ const statusIndicatorVariants = cva(
 );
 
 export interface StatusIndicatorProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof statusIndicatorVariants> {
   label?: string;
   showIcon?: boolean;
@@ -38,6 +54,8 @@ export interface StatusIndicatorProps
 const statusIcons = {
   pending: Clock,
   calling: Phone,
+  ringing: PhoneCall,
+  'in-progress': PhoneForwarded,
   approved: CheckCircle,
   rejected: XCircle,
   timeout: AlertCircle,

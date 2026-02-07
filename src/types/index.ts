@@ -40,6 +40,8 @@ export interface StartMatchingResponse {
 export type SSEEventStatus =
   | 'connected'
   | 'calling'
+  | 'ringing'
+  | 'in-progress'
   | 'accepted'
   | 'rejected'
   | 'no_answer'
@@ -59,6 +61,8 @@ export interface SSEEvent {
 export type CallDisplayStatus =
   | 'pending'
   | 'calling'
+  | 'ringing'
+  | 'in-progress'
   | 'accepted'
   | 'rejected'
   | 'no_answer'

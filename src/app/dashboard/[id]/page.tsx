@@ -292,7 +292,9 @@ export default function DashboardPage({ params }: DashboardPageProps) {
               const indicatorStatus = getIndicatorStatus(entry.status);
               const label = getStatusLabel(entry);
 
-              const isCalling = entry.status === 'calling';
+              const isCalling =
+                entry.status === 'calling' || entry.status === 'ringing';
+              const isInProgress = entry.status === 'in-progress';
               const isAccepted = entry.status === 'accepted';
               const isRejected = entry.status === 'rejected';
               const isNoAnswer = entry.status === 'no_answer';
@@ -308,9 +310,9 @@ export default function DashboardPage({ params }: DashboardPageProps) {
                   <Card
                     className={`h-full transition-all duration-300 ${
                       isCalling
-                        ? 'animate-pulse-ring border-[var(--color-info)] ring-2 ring-[var(--color-info)]/20'
+                        ? 'animate-pulse-ring border-[var(--color-urgent)] ring-2 ring-[var(--color-urgent)]/20'
                         : ''
-                    } ${isAccepted ? 'border-[var(--color-success)] bg-[var(--color-success)]/5' : ''} ${
+                    } ${isInProgress ? 'border-[var(--color-info)] ring-2 ring-[var(--color-info)]/20' : ''} ${isAccepted ? 'border-[var(--color-success)] bg-[var(--color-success)]/5' : ''} ${
                       isRejected || isNoAnswer
                         ? 'opacity-60 grayscale-[0.5]'
                         : ''
@@ -374,6 +376,10 @@ function getIndicatorStatus(status: CallDisplayStatus): IndicatorStatus {
       return 'pending';
     case 'calling':
       return 'calling';
+    case 'ringing':
+      return 'ringing';
+    case 'in-progress':
+      return 'in-progress';
     case 'accepted':
       return 'approved';
     case 'rejected':
@@ -392,7 +398,11 @@ function getStatusLabel(entry: HospitalCallStatus): string {
     case 'pending':
       return '대기 중';
     case 'calling':
-      return '전화 연결 중...';
+      return '전화 거는 중...';
+    case 'ringing':
+      return '📞 전화 울리는 중...';
+    case 'in-progress':
+      return '🗣️ 안내 멘트 재생 중...';
     case 'accepted':
       return '수락됨';
     case 'rejected':
