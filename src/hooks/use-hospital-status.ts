@@ -56,6 +56,29 @@ export function useHospitalStatus(
   useEffect(() => {
     if (!channel) return;
 
+    const stored = sessionStorage.getItem(`hospitals-${channel}`);
+    if (stored) {
+      try {
+        const hospitals: Array<{
+          hospitalId: number;
+          hospitalName: string;
+          hospitalNumber: string;
+        }> = JSON.parse(stored);
+        const initial: Record<number, HospitalCallStatus> = {};
+        for (const h of hospitals) {
+          initial[h.hospitalId] = {
+            hospitalId: h.hospitalId,
+            hospitalName: h.hospitalName,
+            hospitalNumber: h.hospitalNumber,
+            status: 'calling',
+            timestamp: new Date().toISOString(),
+          };
+        }
+        setStatuses(initial);
+        sessionStorage.removeItem(`hospitals-${channel}`);
+      } catch {}
+    }
+
     const eventSource = createSSEConnection(channel);
     eventSourceRef.current = eventSource;
 

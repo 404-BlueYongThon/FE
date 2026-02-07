@@ -220,6 +220,12 @@ export default function PatientChecklist() {
       });
 
       if (result.success) {
+        if (result.hospitals) {
+          sessionStorage.setItem(
+            `hospitals-${result.channel}`,
+            JSON.stringify(result.hospitals)
+          );
+        }
         router.push(`/dashboard/${result.channel}`);
       } else {
         setErrorMessage(result.message || '매칭 시작에 실패했습니다.');

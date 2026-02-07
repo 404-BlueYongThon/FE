@@ -28,6 +28,11 @@ export interface StartMatchingResponse {
   message: string;
   patientId: number;
   channel: string;
+  hospitals?: Array<{
+    hospitalId: number;
+    hospitalName: string;
+    hospitalNumber: string;
+  }>;
 }
 
 // --- SSE Event Types ---
